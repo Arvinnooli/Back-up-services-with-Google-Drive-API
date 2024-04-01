@@ -1,2 +1,5 @@
-#you can fill this with appropriate kubenetes configuration
-# You are free to explore and figure out how Kubernetes config files are written
+FROM python:3.8-slim
+COPY quickstart.py credentials.json ./
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+CMD ["python", "quickstart.py"]
