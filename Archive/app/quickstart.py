@@ -1,59 +1,40 @@
-import os.path
-
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
+import os
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
+# Authenticate and create the Google Drive service
+SCOPES = ['https://www.googleapis.com/auth/drive']
+SERVICE_ACCOUNT_FILE = 'credentials.json'
 
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+service = build('drive', 'v3', credentials=credentials)
 
-def main():
-  """Shows basic usage of the Drive v3 API.
-  Prints the names and ids of the first 10 files the user has access to.
-  """
-  creds = None
-  # The file token.json stores the user's access and refresh tokens, and is
-  # created automatically when the authorization flow completes for the first
-  # time.
-  if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-  # If there are no (valid) credentials available, let the user log in.
-  if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-      creds.refresh(Request())
-    else:
-      flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
-      )
-      creds = flow.run_local_server(port=0)
-    # Save the credentials for the next run
-    with open("token.json", "w") as token:
-      token.write(creds.to_json())
+# Function to upload a single file
+def upload_file(filename, filepath, mimetype):
+    file_metadata = {'name': filename}
+    media = MediaFileUpload(filepath, mimetype=mimetype)
+    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    print(f"File ID: {file.get('id')}")
 
-  try:
-    service = build("drive", "v3", credentials=creds)
+# Function to list files in a directory
+def list_files_in_directory(directory):
+    return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 
-    # Call the Drive v3 API
-    results = (
-        service.files()
-        .list(pageSize=10, fields="nextPageToken, files(id, name)")
-        .execute()
-    )
-    items = results.get("files", [])
+# Function to backup a directory to Google Drive
+def backup_directory(local_directory):
+    files = list_files_in_directory(local_directory)
+    for filename in files:
+        filepath = os.path.join(local_directory, filename)
+        mimetype = 'application/octet-stream'  # Adjust as needed for specific file types
+        try:
+            upload_file(filename, filepath, mimetype)
+            print(f'Successfully uploaded {filename}')
+        except Exception as e:
+            print(f'Failed to upload {filename}: {str(e)}')
+            # Implement retry logic here if needed
 
-    if not items:
-      print("No files found.")
-      return
-    print("Files:")
-    for item in items:
-      print(f"{item['name']} ({item['id']})")
-  except HttpError as error:
-    # TODO(developer) - Handle errors from drive API.
-    print(f"An error occurred: {error}")
-
-
-if __name__ == "__main__":
-  main()
+if __name__ == '__main__':
+    # Replace 'your_local_directory_path' with the path to the directory you wish to back up
+    backup_directory("C:/Users/Arvin/OneDrive/Desktop/dummy")
