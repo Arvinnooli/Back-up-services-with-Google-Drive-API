@@ -37,4 +37,4 @@ def backup_directory(local_directory):
 
 if __name__ == '__main__':
     # Replace 'your_local_directory_path' with the path to the directory you wish to back up
-    backup_directory('C:/Users/Arvin/OneDrive/Desktop/dummy')
+    backup_directory('C:/Users/Arvin/OneDrive/Desktop/CC_project/dummy')
