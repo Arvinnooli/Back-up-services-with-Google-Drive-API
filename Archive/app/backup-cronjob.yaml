@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+spec:
+  schedule:  "*/30 * * * *" # every 30 mins
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup-container
+            image: backup-server
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/credentials/credentials.json
+            volumeMounts:
+            - name: credentials
+              mountPath: /etc/credentials
+              readOnly: true
+          restartPolicy: OnFailure
+          volumes:
+          - name: credentials
+            secret:
+              secretName: google-credentials
