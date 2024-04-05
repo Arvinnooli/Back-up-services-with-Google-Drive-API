@@ -23,3 +23,5 @@ spec:
           - name: credentials
             secret:
               secretName: google-credentials
+
+# command to run this with the image : kubectl apply -f backup-cronjob.yaml
