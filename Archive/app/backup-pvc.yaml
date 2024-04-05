@@ -8,3 +8,5 @@ spec:
   resources:
     requests:
       storage: 1Gi           
+
+#command to  use this with image : kubectl apply -f backup-pvc.yaml
