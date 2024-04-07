@@ -27,7 +27,7 @@ def search_file():
         # Loop through all available pages of results
         while True:
             response = service.files().list(
-                q="mimeType='hello'",
+                q="mimeType='text/plain'",
                 spaces='drive',
                 fields='nextPageToken, files(id, name)',
                 pageToken=page_token

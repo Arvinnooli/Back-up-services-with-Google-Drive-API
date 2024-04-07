@@ -1,9 +1,9 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: backup-cronjob
 spec:
-  schedule:  "*/30 * * * *" # every 30 mins
+  schedule:  "*/5 * * * *" # every 30 mins
   jobTemplate:
     spec:
       template:
@@ -11,6 +11,7 @@ spec:
           containers:
           - name: backup-container
             image: backup-server
+            command: ["python", "C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/backupscript.py"] 
             env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /etc/credentials/credentials.json

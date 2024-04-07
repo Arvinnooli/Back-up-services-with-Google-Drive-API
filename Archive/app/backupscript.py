@@ -5,7 +5,9 @@ import os
 
 # Authenticate and create the Google Drive service
 SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
+SERVICE_ACCOUNT_FILE = '/etc/credentials/cc-project-418504-060a962e75fc.json'
+
+# 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
 
 credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
