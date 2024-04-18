@@ -1,44 +1,44 @@
-# from google.oauth2 import service_account
-# from googleapiclient.discovery import build
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 
-# # Authenticate and create the Google Drive service
-# SCOPES = ['https://www.googleapis.com/auth/drive']
-# SERVICE_ACCOUNT_FILE = 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
+# Authenticate and create the Google Drive service
+SCOPES = ['https://www.googleapis.com/auth/drive']
+SERVICE_ACCOUNT_FILE = 'PATH TO CREDENTIALS.json'
 
-# credentials = service_account.Credentials.from_service_account_file(
-#     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-# service = build('drive', 'v3', credentials=credentials)
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+service = build('drive', 'v3', credentials=credentials)
 
-# def get_file_metadata(file_id):
-#     try:
-#         # Request to get the file metadata
-#         file_metadata = service.files().get(fileId=file_id, fields='id, name, mimeType, size, owners, createdTime, modifiedTime').execute()
+def list_files():
+    try:
+        page_token = None
+        while True:
+            # List all files
+            response = service.files().list(
+                fields='nextPageToken, files(id, name, mimeType, size, owners, createdTime, modifiedTime)',
+                pageToken=page_token
+            ).execute()
 
-#         # Print the metadata
-#         print(f"File ID: {file_metadata.get('id')}")
-#         print(f"Name: {file_metadata.get('name')}")
-#         print(f"MIME Type: {file_metadata.get('mimeType')}")
-#         print(f"Size: {file_metadata.get('size', 'N/A')} bytes")
-#         print(f"Owners: {[owner['emailAddress'] for owner in file_metadata.get('owners', [])]}")
-#         print(f"Created Time: {file_metadata.get('createdTime')}")
-#         print(f"Modified Time: {file_metadata.get('modifiedTime')}")
-#         print("--------------------------------------------------")
+            for file in response.get('files', []):
+                # Print the metadata for each file
+                print(f"File ID: {file.get('id')}")
+                print(f"Name: {file.get('name')}")
+                print(f"MIME Type: {file.get('mimeType')}")
+                print(f"Size: {file.get('size', 'N/A')} bytes")
+                print(f"Owners: {[owner['emailAddress'] for owner in file.get('owners', [])]}")
+                print(f"Created Time: {file.get('createdTime')}")
+                print(f"Modified Time: {file.get('modifiedTime')}")
+                print("--------------------------------------------------")
 
-#     except Exception as e:
-#         print(f"An error occurred: {e}")
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
 
-# if __name__ == '__main__':
-#     # List of file IDs to retrieve metadata for; replace these with your actual file IDs
-#     file_ids = [
-#         '11cyG4f1egCiRf9URf7QKUS65i9F0sCM-',
-#         '1cNfz5qxkFaexhl9ckfp3F-jy-Gasr3Xy',
-#         '1Sae5RWGDM8Tr3PzIx7ULFloxLRg1Hsyg'
-#         # Add more file IDs as needed
-#     ]
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-#     for file_id in file_ids:
-#         get_file_metadata(file_id)
-
+if __name__ == '__main__':
+    list_files()
 
 
 # File ID: 11cyG4f1egCiRf9URf7QKUS65i9F0sCM-
@@ -75,45 +75,3 @@
 # Created Time: 2024-04-01T09:57:00.020Z
 # Modified Time: 2024-04-01T09:57:00.020Z
 # --------------------------------------------------
-
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-
-# Authenticate and create the Google Drive service
-SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
-
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-service = build('drive', 'v3', credentials=credentials)
-
-def list_files():
-    try:
-        page_token = None
-        while True:
-            # List all files
-            response = service.files().list(
-                fields='nextPageToken, files(id, name, mimeType, size, owners, createdTime, modifiedTime)',
-                pageToken=page_token
-            ).execute()
-
-            for file in response.get('files', []):
-                # Print the metadata for each file
-                print(f"File ID: {file.get('id')}")
-                print(f"Name: {file.get('name')}")
-                print(f"MIME Type: {file.get('mimeType')}")
-                print(f"Size: {file.get('size', 'N/A')} bytes")
-                print(f"Owners: {[owner['emailAddress'] for owner in file.get('owners', [])]}")
-                print(f"Created Time: {file.get('createdTime')}")
-                print(f"Modified Time: {file.get('modifiedTime')}")
-                print("--------------------------------------------------")
-
-            page_token = response.get('nextPageToken', None)
-            if page_token is None:
-                break
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-if __name__ == '__main__':
-    list_files()
