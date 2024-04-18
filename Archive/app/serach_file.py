@@ -4,7 +4,7 @@ from googleapiclient.errors import HttpError
 import os
 
 # Path to your service account key file
-SERVICE_ACCOUNT_FILE = 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
+SERVICE_ACCOUNT_FILE = 'PATH TO CREDENTIALS.json'
 
 # Scopes required by the application
 SCOPES = ['https://www.googleapis.com/auth/drive']
