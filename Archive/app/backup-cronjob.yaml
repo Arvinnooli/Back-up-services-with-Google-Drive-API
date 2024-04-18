@@ -11,7 +11,7 @@ spec:
           containers:
           - name: backup-container
             image: backup-server
-            command: ["python", "C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/backupscript.py"] 
+            command: ["python", "'PATH TO backupscript"] 
             env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /etc/credentials/credentials.json
