@@ -5,7 +5,7 @@ import os
 
 # Authenticate and create the Google Drive service
 SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = '/etc/credentials/cc-project-418504-060a962e75fc.json'
+SERVICE_ACCOUNT_FILE = 'PATH TO CREDENTIALS.json'
 
 # 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/app/cc-project-418504-060a962e75fc.json'
 
@@ -39,4 +39,4 @@ def backup_directory(local_directory):
 
 if __name__ == '__main__':
     # Replace 'your_local_directory_path' with the path to the directory you wish to back up
-    backup_directory('C:/Users/Arvin/OneDrive/Desktop/CC_project/dummy')
+    backup_directory('PATH TO BACK UP DIRECTORY')
