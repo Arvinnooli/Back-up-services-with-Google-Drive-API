@@ -5,7 +5,7 @@ import io
 
 # Set up the credentials and Drive API client
 SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = '/etc/credentials/cc-project-418504-060a962e75fc.json'  # Update this to your service account file path
+SERVICE_ACCOUNT_FILE = ''PATH TO CREDENTIALS.json''  # Update this to your service account file path
 
 credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -33,6 +33,6 @@ def download_file(file_id, destination):
     print(f"File has been downloaded to: {destination}")
 
 if __name__ == '__main__':
-    file_id = 'your_file_id_here'  # Replace with your actual file ID
-    destination_path = 'C:/Users/Arvin/OneDrive/Desktop/CC_project/Archive/backup_download'  # Replace with your desired local file path
+    file_id = 'FILE ID'  # obtained after u run backupscript.py
+    destination_path = ''PATH TO LOCAL DIRECTORY WHERE YOU WANT FILE TO BE DOWNLOADED'  # Replace with your desired local file path
     download_file(file_id, destination_path)
