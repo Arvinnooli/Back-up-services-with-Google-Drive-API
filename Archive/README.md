@@ -24,7 +24,7 @@
     1. https://python.plainenglish.io/automate-google-drive-backup-using-python-105f57e2151
     2. https://developers.google.com/drive/api/quickstart/python
     3. https://kubernetes.io/ 
-    4. Any AI  code generator of your choice ;)
+
 ### Notes
  1. The main logic of the app is the quickstart.py file, which uses the Google API to list out files on GDrive.
 
@@ -32,5 +32,3 @@
 
  3.  Modify the Dockerfile appropriately to package your application and required dependencies
  4. Please don't upload your containers publicly onto public registries like DockerHub as sensitive Gdrive data might get leaked.
-### Bonus
-Can you come up with small gui to schedule the frequency of upload?
