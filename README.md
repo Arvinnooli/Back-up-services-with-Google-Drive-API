@@ -21,6 +21,7 @@ Creating a backup service that periodically backs up the contents of a folder to
 - **service_account_credentials.json**: (only format includes no content due to security reasons) Service account credentials file used for authentication with the Google Cloud API.
 
 ## Setup and Deployment
+install requirements.txt
 
 1. **Build Docker Image**: Run `docker build -t backup-server .` to create the Docker image from the Dockerfile.
 2. **Run Locally**: Execute `docker run --name backup-container backup-server` to start the backup process manually.
